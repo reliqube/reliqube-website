@@ -54,21 +54,12 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     emails: ["reliqube@gmail.com"],
     images: [{
-      url:    "/og-image.png",
+      url:    "/opengraph-image.png",
       width:  1200,
       height: 630,
       alt:    "Reliqube — Consultoria em SRE & Platform Engineering",
       type:   "image/png",
     }],
-  },
-
-  twitter: {
-    card:        "summary_large_image",
-    site:        "@reliqube",
-    creator:     "@reliqube",
-    title:       TITLE,
-    description: DESCRIPTION,
-    images:      [{ url: "/og-image.png", alt: "Reliqube" }],
   },
 
   robots: {
@@ -116,7 +107,7 @@ const organizationSchema = {
   url:           BASE_URL,
   logo:          `${BASE_URL}/icon-512.png`,
   description:   DESCRIPTION,
-  foundingDate:  "2024",
+  foundingDate:  "2026",
   contactPoint: {
     "@type":           "ContactPoint",
     contactType:       "customer service",

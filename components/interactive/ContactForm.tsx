@@ -72,8 +72,11 @@ export function ContactForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
-    // Substitua pelo seu endpoint real (Resend, Formspree, etc.)
-    await new Promise((r) => setTimeout(r, 1300));
+    await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(FormData),
+    });
     setStatus("done");
   };
 

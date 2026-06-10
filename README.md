@@ -94,7 +94,7 @@ Configured in `app/layout.tsx`. Add your real domain:
 metadataBase: new URL("https://reliqube.com"),
 ```
 
-Add OG image at `public/og-image.png` (1200×630px).
+Add OG image at `public/opengraph-image.png` (1200×630px).
 
 ---
 

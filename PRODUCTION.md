@@ -13,8 +13,8 @@
 - [x] Copy verification token → set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` env var
 - [x] Submit sitemap: `https://reliqube.com/sitemap.xml` (generate with `next-sitemap` — see below)
 - [x] Test OG image: [opengraph.xyz/url/https://reliqube.com](https://opengraph.xyz)
-- [ ] Test structured data: [search.google.com/test/rich-results](https://search.google.com/test/rich-results)
-- [ ] Verify canonical URL in rendered HTML (`<link rel="canonical">`)
+- [x] Test structured data: [search.google.com/test/rich-results](https://search.google.com/test/rich-results)
+- [x] Verify canonical URL in rendered HTML (`<link rel="canonical">`)
 
 ### Performance
 - [ ] Run Lighthouse audit in Chrome DevTools (target: Performance ≥95, A11y ≥95)

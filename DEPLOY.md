@@ -214,11 +214,10 @@ Targets: Performance ≥ 95, Accessibility ≥ 95, SEO = 100, Best Practices = 1
 ## Production Recommendations
 
 ### Immediate (before launch)
-- [ ] Connect contact form to Resend or Formspree (see `PRODUCTION.md`)
+- [x] Connect contact form to Resend or Formspree (see `PRODUCTION.md`)
 - [x] Set real email in `ContactSection.tsx` (currently `reliqube@gmail.com`)
-- [ ] Set real LinkedIn URL in `ContactSection.tsx`
-- [ ] Set real Twitter handle in `layout.tsx` (`@reliqube`)
-- [ ] Update `foundingDate` in Organization schema if different from 2024
+- [x] Set real LinkedIn URL in `ContactSection.tsx`
+- [x] Update `foundingDate` in Organization schema if different from 2024
 
 ### First week after launch
 - [ ] Enable **Vercel Analytics** (Project Settings → Analytics → Enable)
