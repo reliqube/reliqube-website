@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Disallow: /api/
+
+# Host
+Host: https://reliqube.com
+
+# Sitemaps
+Sitemap: https://reliqube.com/sitemap.xml
