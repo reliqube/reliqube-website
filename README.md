@@ -107,4 +107,4 @@ Currently simulates submission. Connect to:
 
 ---
 
-© 2025 Reliqube. All rights reserved.
+© 2026 Reliqube. All rights reserved.
