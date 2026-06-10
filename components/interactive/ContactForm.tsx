@@ -157,7 +157,8 @@ export function ContactForm() {
 
       <button
         type="submit"
-        disabled={status === "loading"}
+        disabled={true}
+        // disabled={status === "loading"}
         className="btn-primary"
         aria-disabled={status === "loading"}
         style={{

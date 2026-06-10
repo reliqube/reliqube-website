@@ -1,16 +1,18 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://reliqube.com",
+  siteUrl: 'https://reliqube.com',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
-  changefreq:       "monthly",
-  priority:         0.8,
-  sitemapSize:      100,
+  outDir: 'public',
+  exclude: ['/api/*', '/_not-found'],
+  changefreq: 'weekly',
+  priority: 0.7,
+  sitemapSize: 5000,
   robotsTxtOptions: {
     policies: [
-      { userAgent: "*", allow: "/"        },
-      { userAgent: "*", disallow: "/api/" },
+      { userAgent: '*', allow: '/' },
+      { userAgent: '*', disallow: '/api/' },
     ],
-    additionalSitemaps: [],
+    additionalSitemaps: ['https://reliqube.com/sitemap.xml'],
   },
 };

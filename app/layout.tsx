@@ -16,10 +16,7 @@ export const viewport: Viewport = {
 /* ─── Metadata ─────────────────────────────────────────── */
 const BASE_URL   = "https://reliqube.com";
 const TITLE      = "Reliqube — Consultoria em SRE & Platform Engineering";
-const DESCRIPTION =
-  "A Reliqube é uma consultoria especializada em SRE e Platform Engineering. " +
-  "Projetamos e operamos plataformas cloud-native de alta confiabilidade — " +
-  "de arquitetura Kubernetes à observabilidade full-stack e automação GitOps.";
+const DESCRIPTION = "SRE, DevOps e Platform Engineering para plataformas cloud-native modernas e confiáveis.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -55,6 +52,7 @@ export const metadata: Metadata = {
     siteName:    "Reliqube",
     title:       TITLE,
     description: DESCRIPTION,
+    emails: ["reliqube@gmail.com"],
     images: [{
       url:    "/og-image.png",
       width:  1200,
@@ -104,6 +102,10 @@ export const metadata: Metadata = {
   },
 
   category: "technology",
+
+  other: {
+    "theme-color": "#15151a",
+  },
 };
 
 /* ─── Structured data ──────────────────────────────────── */

@@ -5,14 +5,14 @@
 ### Domain & DNS
 - [x] Domain `reliqube.com` purchased and DNS managed (Cloudflare recommended)
 - [x] Add domain in Vercel dashboard → Project Settings → Domains
-- [ ] Verify `www.reliqube.com` → redirects to `reliqube.com` (handled by `next.config.ts`)
-- [ ] HTTPS auto-provisioned by Vercel (Let's Encrypt)
+- [x] Verify `www.reliqube.com` → redirects to `reliqube.com` (handled by `next.config.ts`)
+- [x] HTTPS auto-provisioned by Vercel (Let's Encrypt)
 
 ### SEO & Indexing
-- [ ] Submit `reliqube.com` to [Google Search Console](https://search.google.com/search-console)
-- [ ] Copy verification token → set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` env var
-- [ ] Submit sitemap: `https://reliqube.com/sitemap.xml` (generate with `next-sitemap` — see below)
-- [ ] Test OG image: [opengraph.xyz/url/https://reliqube.com](https://opengraph.xyz)
+- [x] Submit `reliqube.com` to [Google Search Console](https://search.google.com/search-console)
+- [x] Copy verification token → set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` env var
+- [x] Submit sitemap: `https://reliqube.com/sitemap.xml` (generate with `next-sitemap` — see below)
+- [x] Test OG image: [opengraph.xyz/url/https://reliqube.com](https://opengraph.xyz)
 - [ ] Test structured data: [search.google.com/test/rich-results](https://search.google.com/test/rich-results)
 - [ ] Verify canonical URL in rendered HTML (`<link rel="canonical">`)
 
