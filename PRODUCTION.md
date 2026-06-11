@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
   const { name, email, company, interest, message } = await req.json();
 
   await resend.emails.send({
-    from:    "website@reliqube.com",
+    from:    "Reliqube <website@reliqube.com>",
     to:      "reliqube@gmail.com",
     subject: `New enquiry from ${name} — ${interest || "General"}`,
     text:    `Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\n${message}`,

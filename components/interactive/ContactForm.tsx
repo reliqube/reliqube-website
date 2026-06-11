@@ -2,6 +2,7 @@
 
 import React, { useState, useId } from "react";
 import { InterestSelector } from "./InterestSelector";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const INPUT_BASE: React.CSSProperties = {
   width: "100%",
@@ -67,18 +68,50 @@ function FieldLabel({ label, id, required }: { label: string; id: string; requir
 
 export function ContactForm() {
   const uid = useId();
-  const [status, setStatus] = useState<"idle" | "loading" | "done">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("loading");
-    await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(FormData),
-    });
-    setStatus("done");
+
+    if (!turnstileToken) {
+      alert("Confirme a validação anti-spam.");
+      return;
+    }
+
+    try {
+      setStatus("loading");
+
+      const form = new FormData(e.currentTarget);
+
+      const formData = {
+        name: String(form.get("name") || ""),
+        email: String(form.get("email") || ""),
+        company: String(form.get("company") || ""),
+        interest: String(form.get("interest") || ""),
+        message: String(form.get("message") || ""),
+        turnstileToken,
+      };
+
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao enviar formulário");
+      }
+
+      setStatus("done");
+      e.currentTarget.reset();
+
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+    }
   };
+
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   if (status === "done") {
     return (
@@ -158,10 +191,31 @@ export function ContactForm() {
           placeholder="Conte-nos sobre os desafios da sua infraestrutura ou o que você quer alcançar…" />
       </div>
 
+      <Turnstile
+        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+        onSuccess={(token) => setTurnstileToken(token)}
+        onExpire={() => setTurnstileToken("")}
+      />
+
+      {status === "error" && (
+        <div
+          role="alert"
+          style={{
+            padding: "12px",
+            borderRadius: "var(--radius-md)",
+            background: "rgba(255, 80, 80, 0.08)",
+            border: "1px solid rgba(255, 80, 80, 0.18)",
+            color: "#ffb4b4",
+            fontSize: "0.875rem",
+          }}
+        >
+          Não foi possível enviar sua mensagem. Tente novamente.
+        </div>
+      )}
+
       <button
         type="submit"
-        disabled={true}
-        // disabled={status === "loading"}
+        disabled={status === "loading"}
         className="btn-primary"
         aria-disabled={status === "loading"}
         style={{
