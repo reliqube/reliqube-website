@@ -104,7 +104,10 @@ export function ContactForm() {
       setErrorMessage("");
       setIsTurnstileExpired(false);
 
-      const form = new FormData(e.currentTarget);
+      // ✅ Capture form element reference BEFORE any async operations
+      // This prevents synthetic event invalidation issues after await
+      const formElement = e.currentTarget;
+      const form = new FormData(formElement);
 
       const formData = {
         name: String(form.get("name") || "").trim(),
@@ -150,7 +153,8 @@ export function ContactForm() {
         }
 
         setStatus("done");
-        e.currentTarget.reset();
+        // ✅ Use captured reference, safe after async operations
+        formElement.reset();
         setTurnstileToken(""); // Reset token after successful submission
 
         // Auto-reset form after delay
