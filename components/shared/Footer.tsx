@@ -66,7 +66,7 @@ export function Footer() {
 
           <p style={{
             fontSize: "0.875rem", color: "var(--text-secondary)",
-            maxWidth: 420, lineHeight: 1.70, margin: 0,
+            maxWidth: 400, lineHeight: 1.65, margin: 0,
           }}>
             Vamos projetar uma plataforma que escala, observa e sustenta
             pressão. Respondemos normalmente em um dia útil.

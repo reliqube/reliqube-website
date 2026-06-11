@@ -78,8 +78,9 @@ export function StackSection() {
 
         <Reveal delay={2} style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
           gap: 16,
+          minWidth: 0,
         }}>
           {CATEGORIES.map((cat) => (
             <div key={cat.label} style={{
@@ -87,21 +88,22 @@ export function StackSection() {
               border: "1px solid var(--border-faint)",
               borderRadius: "var(--radius-lg)",
               padding: "20px 20px 18px",
+              minWidth: 0,
+              maxWidth: "100%",
+              overflow: "hidden",
             }}>
               <p style={{
                 fontSize: "0.6875rem", fontWeight: 700,
                 letterSpacing: "0.09em", textTransform: "uppercase",
                 color: "var(--violet-500)", marginBottom: 14,
               }}>{cat.label}</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 8 }}>
                 {cat.items.map((item) => (
                   <div key={item.name} className="tool-chip">
                     <div className="tool-abbr">{item.abbr.slice(0, 5)}</div>
-                    <div style={{ minWidth: 0 }}>
+                    <div style={{ minWidth: 0, maxWidth: "100%" }}>
                       <div className="tool-name">{item.name}</div>
-                      <div style={{
-                        fontSize: "0.6875rem", color: "var(--text-tertiary)", lineHeight: 1.3,
-                      }}>{item.desc}</div>
+                      <div className="tool-desc">{item.desc}</div>
                     </div>
                   </div>
                 ))}
