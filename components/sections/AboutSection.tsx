@@ -153,7 +153,7 @@ export function AboutSection() {
               {VALUES.map((v) => (
                 <div key={v.title} className="value-card">
                   <div className="value-bar" aria-hidden="true" />
-                  <h4 className="value-title">{v.title}</h4>
+                  <h3 className="value-title">{v.title}</h3>
                   <p style={{
                     fontSize: "0.75rem", lineHeight: 1.58,
                     color: "var(--text-tertiary)", margin: 0,

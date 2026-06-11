@@ -17,25 +17,25 @@
 - [x] Verify canonical URL in rendered HTML (`<link rel="canonical">`)
 
 ### Performance
-- [ ] Run Lighthouse audit in Chrome DevTools (target: Performance ≥95, A11y ≥95)
-- [ ] Test on mobile: Chrome DevTools → Toggle device toolbar → Moto G4
-- [ ] Test on slow 3G: Chrome DevTools → Network → Slow 3G
-- [ ] Check Core Web Vitals in Vercel Analytics after first traffic
+- [X] Run Lighthouse audit in Chrome DevTools (target: Performance ≥95, A11y ≥95)
+- [x] Test on mobile: Chrome DevTools → Toggle device toolbar → Moto G4
+- [x] Test on slow 3G: Chrome DevTools → Network → Slow 3G
+- [X] Check Core Web Vitals in Vercel Analytics after first traffic
 
 ### Accessibility
-- [ ] Tab through entire page with keyboard — all interactive elements reachable
+- [X] Tab through entire page with keyboard — all interactive elements reachable
 - [ ] Screen reader test: VoiceOver (macOS) or NVDA (Windows)
 - [ ] Verify skip-link works: Tab on first load → "Skip to main content" visible → Enter jumps to `#main-content`
 - [ ] Confirm focus rings visible on all interactive elements (buttons, links, inputs)
 - [ ] Check color contrast: [webaim.org/resources/contrastchecker](https://webaim.org/resources/contrastchecker)
 
 ### Contact Form
-- [ ] Connect real form endpoint (see options below)
-- [ ] Test form submission end-to-end
-- [ ] Add spam protection (Cloudflare Turnstile or hCaptcha)
+- [X] Connect real form endpoint (see options below)
+- [X] Test form submission end-to-end
+- [X] Add spam protection (Cloudflare Turnstile or hCaptcha)
 
 ### Analytics
-- [ ] Enable Vercel Analytics in Project Settings → Analytics
+- [X] Enable Vercel Analytics in Project Settings → Analytics
 - [ ] Optional: add Plausible for privacy-first analytics
 
 ---

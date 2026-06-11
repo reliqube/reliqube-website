@@ -81,7 +81,7 @@ function HeroBrandMark() {
         position: "absolute",
         right: "clamp(-80px, -2vw, 40px)",
         top: "50%", transform: "translateY(-52%)",
-        width: "clamp(340px, 36vw, 480px)",
+        width: "clamp(442px, 47vw, 624px)",
         aspectRatio: "1/1", pointerEvents: "none",
         alignItems: "center", justifyContent: "center",
       }}
@@ -113,7 +113,7 @@ export function HeroSection() {
       }}
     >
       <canvas ref={canvasRef} aria-hidden="true" style={{
-        position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.8,
+        position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 1,
       }} />
       <div aria-hidden="true" style={{
         position: "absolute", inset: 0, pointerEvents: "none",
