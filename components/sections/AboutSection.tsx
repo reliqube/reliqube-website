@@ -22,48 +22,157 @@ const VALUES = [
   },
 ];
 
-function ModularGrid() {
-  const cells = Array.from({ length: 8 }, (_, r) =>
-    Array.from({ length: 6 }, (_, c) => {
-      const ox = c * 56 + (r % 2) * 28;
-      const oy = r * 32 + 8;
-      const shade = ((r + c) % 3) * 0.012;
-      return (
-        <polygon key={`${r}-${c}`}
-          points={`${ox+28},${oy} ${ox+56},${oy+16} ${ox+28},${oy+32} ${ox},${oy+16}`}
-          stroke={`rgba(142,99,245,${0.06 + shade})`} strokeWidth="0.7" fill="none" />
-      );
-    })
-  );
+/**
+ * Isometric cube face generator — mirrors the geometry used in the
+ * Reliqube logo mark (top / left / right faces sharing one vertex).
+ *
+ * (cx, cy) is the shared inner vertex of the three faces.
+ * dx = horizontal half-width, dy = vertical half-height of the cube.
+ */
+function cubeFaces(cx: number, cy: number, dx: number, dy: number) {
+  const A  = `${cx},${cy - dy}`;          // apex (top)
+  const L  = `${cx - dx},${cy - dy / 2}`; // left vertex
+  const R  = `${cx + dx},${cy - dy / 2}`; // right vertex
+  const P  = `${cx},${cy}`;               // shared center vertex
+  const B  = `${cx},${cy + dy}`;          // bottom vertex
+  const BL = `${cx - dx},${cy + dy / 2}`; // bottom-left
+  const BR = `${cx + dx},${cy + dy / 2}`; // bottom-right
+  return {
+    top:   `${A} ${R} ${P} ${L}`,
+    left:  `${L} ${P} ${B} ${BL}`,
+    right: `${R} ${P} ${B} ${BR}`,
+    apex:  { x: cx, y: cy - dy },
+  };
+}
+
+/**
+ * CoreArchitecture — a single "core" cube (Reliqube) with five
+ * satellite modules connected via short architectural traces, set
+ * on a faint blueprint grid. Every position is hand-placed (pentagon
+ * arrangement) — nothing is randomized.
+ */
+function CoreArchitecture() {
+  // Core cube — center of the composition
+  const core = cubeFaces(220, 160, 42, 45);
+  const CORE_CENTER = { x: 220, y: 160 };
+  const CORE_PORT_R = 50; // distance from core center to its connection ports
+
+  // Five satellite modules in a pentagon, each mapped to a platform
+  // discipline from the Stack section — reinforces "connected,
+  // modular, cloud-native ecosystem" without literal icons.
+  const SATELLITES = [
+    { angleDeg: -90, label: "K8S" },  // top      — orchestration core
+    { angleDeg: -18, label: "GTO" },  // upper-right — GitOps
+    { angleDeg:  54, label: "OBS" },  // lower-right — Observability
+    { angleDeg: 126, label: "SEC" },  // lower-left  — Security
+    { angleDeg: 198, label: "CLD" },  // upper-left  — Cloud
+  ].map(({ angleDeg, label }) => {
+    const rad = (angleDeg * Math.PI) / 180;
+    const dirX = Math.cos(rad);
+    const dirY = Math.sin(rad);
+    const SAT_DISTANCE = 120;
+    const center = {
+      x: CORE_CENTER.x + SAT_DISTANCE * dirX,
+      y: CORE_CENTER.y + SAT_DISTANCE * dirY,
+    };
+    const cube = cubeFaces(center.x, center.y, 20, 21);
+    const corePort = {
+      x: CORE_CENTER.x + CORE_PORT_R * dirX,
+      y: CORE_CENTER.y + CORE_PORT_R * dirY,
+    };
+    const satPort = {
+      x: center.x - 24 * dirX,
+      y: center.y - 24 * dirY,
+    };
+    return { cube, corePort, satPort, label, apex: cube.apex };
+  });
+
   return (
-    <svg viewBox="0 0 360 280" fill="none" xmlns="http://www.w3.org/2000/svg"
+    <svg
+      viewBox="0 0 440 330"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       style={{ width: "100%", height: "100%", position: "absolute", inset: 0 }}
-      aria-hidden="true">
+      aria-hidden="true"
+    >
       <defs>
-        <radialGradient id="abGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(142,99,245,0.12)" />
+        {/* Fine blueprint grid */}
+        <pattern id="bpGrid" width="22" height="22" patternUnits="userSpaceOnUse">
+          <path d="M 22 0 L 0 0 0 22" stroke="rgba(142,99,245,0.05)" strokeWidth="0.6" fill="none" />
+        </pattern>
+        {/* Soft glow centered on the core */}
+        <radialGradient id="coreGlow" cx="50%" cy="48%" r="55%">
+          <stop offset="0%"  stopColor="rgba(142,99,245,0.14)" />
           <stop offset="100%" stopColor="rgba(142,99,245,0)" />
         </radialGradient>
       </defs>
-      {cells}
-      <polygon points="180,80  220,102 220,146 180,124" fill="rgba(114,72,224,0.55)" />
-      <polygon points="140,102 140,146 180,168 180,124" fill="rgba(142,99,245,0.55)" />
-      <polygon points="140,102 180,80  220,102 180,124" fill="rgba(171,135,255,0.45)" />
-      <path d="M148,118 L160,118 L160,128 L152,128 L152,138 L166,138"
-        stroke="#d4b8ff" strokeWidth="1.2" fill="none" strokeLinecap="round" opacity="0.55" />
-      <polygon points="248,54 276,68 276,96 248,82"  fill="rgba(114,72,224,0.45)" />
-      <polygon points="220,68 220,96 248,110 248,82" fill="rgba(142,99,245,0.45)" />
-      <polygon points="220,68 248,54 276,68 248,82"  fill="rgba(171,135,255,0.38)" />
-      <polygon points="112,148 140,162 140,190 112,176" fill="rgba(114,72,224,0.35)" />
-      <polygon points="84,162  84,190 112,204 112,176" fill="rgba(142,99,245,0.35)" />
-      <polygon points="84,162  112,148 140,162 112,176" fill="rgba(171,135,255,0.28)" />
-      <line x1="220" y1="68" x2="180" y2="80"  stroke="rgba(142,99,245,0.20)" strokeWidth="1" strokeDasharray="4 3" />
-      <line x1="140" y1="146" x2="112" y2="148" stroke="rgba(142,99,245,0.16)" strokeWidth="1" strokeDasharray="4 3" />
-      {([[180,168],[248,110],[112,204]] as [number,number][]).map(([cx,cy],i) => (
-        <circle key={i} cx={cx} cy={cy} r="3.5"
-          fill="rgba(142,99,245,0.30)" stroke="rgba(171,135,255,0.6)" strokeWidth="1" />
+
+      {/* ── Background: blueprint grid + glow ───────────── */}
+      <rect width="440" height="330" fill="url(#bpGrid)" />
+      <rect width="440" height="330" fill="url(#coreGlow)" />
+
+      {/* ── Corner crop marks — drafting/blueprint cue ──── */}
+      {[
+        { x: 16, y: 16, dx: 1, dy: 1 },
+        { x: 424, y: 16, dx: -1, dy: 1 },
+        { x: 16, y: 314, dx: 1, dy: -1 },
+        { x: 424, y: 314, dx: -1, dy: -1 },
+      ].map((c, i) => (
+        <g key={i} stroke="rgba(142,99,245,0.20)" strokeWidth="1" strokeLinecap="round">
+          <line x1={c.x} y1={c.y} x2={c.x + 12 * c.dx} y2={c.y} />
+          <line x1={c.x} y1={c.y} x2={c.x} y2={c.y + 12 * c.dy} />
+        </g>
       ))}
-      <rect width="360" height="280" fill="url(#abGlow)" />
+
+      {/* ── Connection traces (drawn first, behind cubes) ─ */}
+      {SATELLITES.map((s, i) => (
+        <g key={`trace-${i}`}>
+          <line
+            x1={s.corePort.x} y1={s.corePort.y}
+            x2={s.satPort.x}  y2={s.satPort.y}
+            stroke="rgba(142,99,245,0.22)" strokeWidth="1" strokeDasharray="3 4"
+          />
+          <circle cx={s.corePort.x} cy={s.corePort.y} r="2"
+            fill="rgba(200,178,255,0.55)" stroke="rgba(212,184,255,0.4)" strokeWidth="0.5" />
+          <circle cx={s.satPort.x} cy={s.satPort.y} r="2"
+            fill="rgba(200,178,255,0.45)" stroke="rgba(212,184,255,0.35)" strokeWidth="0.5" />
+        </g>
+      ))}
+
+      {/* ── Satellite modules — translucent, secondary ──── */}
+      {SATELLITES.map((s, i) => (
+        <g key={`sat-${i}`}>
+          <polygon points={s.cube.top}   fill="rgba(171,135,255,0.28)" stroke="rgba(212,184,255,0.16)" strokeWidth="0.6" />
+          <polygon points={s.cube.left}  fill="rgba(142,99,245,0.30)"  stroke="rgba(212,184,255,0.16)" strokeWidth="0.6" />
+          <polygon points={s.cube.right} fill="rgba(114,72,224,0.26)"  stroke="rgba(212,184,255,0.16)" strokeWidth="0.6" />
+          <text
+            x={s.apex.x} y={s.apex.y - 9}
+            textAnchor="middle"
+            fontFamily="var(--font-geist-mono)"
+            fontSize="7" fontWeight="700" letterSpacing="1.5"
+            fill="rgba(200,178,255,0.45)"
+          >
+            {s.label}
+          </text>
+        </g>
+      ))}
+
+      {/* ── Core cube — the Reliqube center, solid + vivid ─ */}
+      <polygon points={core.top}   fill="rgba(171,135,255,0.88)" stroke="rgba(212,184,255,0.38)" strokeWidth="1" />
+      <polygon points={core.left}  fill="rgba(142,99,245,0.90)"  stroke="rgba(212,184,255,0.38)" strokeWidth="1" />
+      <polygon points={core.right} fill="rgba(114,72,224,0.85)"  stroke="rgba(212,184,255,0.38)" strokeWidth="1" />
+
+      {/* Core "control point" — a single port on the top face */}
+      <rect x="215" y="132.75" width="10" height="10" rx="1.5"
+        fill="rgba(20,16,35,0.45)" stroke="rgba(212,184,255,0.45)" strokeWidth="0.6" />
+      <circle cx="220" cy="137.75" r="2" fill="rgba(212,184,255,0.65)" />
+
+      {/* Core label */}
+      <text x="220" y="222" textAnchor="middle"
+        fontFamily="var(--font-geist-mono)" fontSize="8" fontWeight="700"
+        letterSpacing="3" fill="rgba(212,184,255,0.45)">
+        CORE
+      </text>
     </svg>
   );
 }
@@ -99,14 +208,7 @@ export function AboutSection() {
               background: "var(--bg-raised)", border: "1px solid var(--border-subtle)",
               overflow: "hidden", aspectRatio: "4/3", maxWidth: 440, margin: "0 auto",
             }}>
-              <ModularGrid />
-              <div style={{
-                position: "absolute", inset: 0, display: "flex",
-                alignItems: "center", justifyContent: "center", pointerEvents: "none",
-              }}>
-                <Image src="/logo.png" alt="" width={120} height={120} aria-hidden="true"
-                  style={{ opacity: 0.12, filter: "brightness(1.5) saturate(1.3)", mixBlendMode: "screen" }} />
-              </div>
+              <CoreArchitecture />
               <p style={{
                 position: "absolute", bottom: 14, left: 16, right: 16,
                 fontFamily: "var(--font-geist-mono)", fontSize: "0.6875rem",
@@ -153,7 +255,7 @@ export function AboutSection() {
               {VALUES.map((v) => (
                 <div key={v.title} className="value-card">
                   <div className="value-bar" aria-hidden="true" />
-                  <h3 className="value-title">{v.title}</h3>
+                  <h4 className="value-title">{v.title}</h4>
                   <p style={{
                     fontSize: "0.75rem", lineHeight: 1.58,
                     color: "var(--text-tertiary)", margin: 0,
