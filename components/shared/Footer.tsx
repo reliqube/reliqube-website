@@ -5,6 +5,7 @@ import { SocialLinks } from "./SocialLinks";
 
 const LINKS = [
   { label: "Serviços",         href: "#services" },
+  { label: "Pacotes",          href: "#packages" },
   { label: "Por que Reliqube", href: "#why"      },
   { label: "Tecnologias",      href: "#stack"    },
   { label: "Sobre",            href: "#about"    },

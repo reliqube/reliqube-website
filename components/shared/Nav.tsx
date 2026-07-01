@@ -4,10 +4,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Logo } from "./Logo";
 
 const NAV_LINKS = [
-  { label: "Serviços",     href: "#services" },
+  { label: "Serviços", href: "#services" },
+  { label: "Pacotes", href: "#packages" },
   { label: "Por que Reliqube", href: "#why" },
-  { label: "Tecnologias",  href: "#stack"    },
-  { label: "Sobre",        href: "#about"    },
+  { label: "Tecnologias", href: "#stack" },
+  { label: "Sobre", href: "#about" },
 ];
 
 function scrollTo(href: string) {

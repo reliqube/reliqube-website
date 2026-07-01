@@ -527,3 +527,93 @@ body {
   color: var(--violet-400);
   font-weight: 600;
 }
+
+/* ══════════════════════════════════════════════════════════
+   PACKAGES SECTION
+   ══════════════════════════════════════════════════════════ */
+
+/* ─── Package card ───────────────────────────────────────── */
+.pkg-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-faint);
+  overflow: hidden;
+  transition:
+    border-color var(--duration-base) var(--ease-in-out),
+    box-shadow   var(--duration-base) var(--ease-in-out),
+    transform    var(--duration-base) var(--ease-out-expo);
+}
+.pkg-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 0% 0%, rgba(142,99,245,0.07) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-in-out);
+  pointer-events: none;
+}
+.pkg-card:hover {
+  border-color: var(--border-subtle);
+  box-shadow: 0 20px 56px rgba(8,6,18,0.38), var(--glow-sm);
+  transform: translateY(-3px);
+}
+.pkg-card:hover::before { opacity: 1; }
+.pkg-card:hover .pkg-icon {
+  background: rgba(142,99,245,0.18);
+  border-color: rgba(142,99,245,0.30);
+  box-shadow: var(--glow-sm);
+}
+.pkg-card:hover .pkg-hours { color: var(--violet-300); }
+
+/* ─── Package icon badge ─────────────────────────────────── */
+.pkg-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(142,99,245,0.09);
+  border: 1px solid rgba(142,99,245,0.16);
+  color: var(--violet-400);
+  flex-shrink: 0;
+  transition: background var(--duration-base) ease,
+              border-color var(--duration-base) ease,
+              box-shadow var(--duration-base) ease;
+}
+
+/* ─── Hours badge ────────────────────────────────────────── */
+.pkg-hours {
+  font-family: var(--font-geist-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(142,99,245,0.55);
+  transition: color var(--duration-fast) ease;
+}
+
+/* ─── Deliverable item ───────────────────────────────────── */
+.pkg-deliverable {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.pkg-deliverable::before {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--violet-500);
+  flex-shrink: 0;
+  margin-top: 7px;
+  opacity: 0.7;
+}
+
+/* ─── Module connector line ──────────────────────────────── */
+.pkg-connector {
+  position: relative;
+}
+.pkg-connector + .pkg-connector::before {
+  content: '';
+  display: none; /* shown via JS-free sibling trick on wide screens */
+}
